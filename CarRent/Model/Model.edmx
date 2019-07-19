@@ -1,0 +1,848 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Avaiabilities">
+          <Key>
+            <PropertyRef Name="AvaiabilityId" />
+          </Key>
+          <Property Name="AvaiabilityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AvaiabilityName" Type="nchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bodies">
+          <Key>
+            <PropertyRef Name="BodyId" />
+          </Key>
+          <Property Name="BodyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BodyName" Type="nchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Brands">
+          <Key>
+            <PropertyRef Name="BrandId" />
+          </Key>
+          <Property Name="BrandId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandName" Type="nchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="CarId" />
+          </Key>
+          <Property Name="CarId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandId" Type="int" Nullable="false" />
+          <Property Name="ModelId" Type="int" Nullable="false" />
+          <Property Name="TransmissionId" Type="int" />
+          <Property Name="BodyId" Type="int" />
+          <Property Name="AvaiabilityId" Type="int" Nullable="false" />
+          <Property Name="Plate" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="VIN" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="Year4" Type="int" Nullable="false" />
+          <Property Name="PowerKM" Type="int" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="CityName" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MileageHistory">
+          <Key>
+            <PropertyRef Name="MileageId" />
+          </Key>
+          <Property Name="MileageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Mileage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Models">
+          <Key>
+            <PropertyRef Name="ModelId" />
+          </Key>
+          <Property Name="ModelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandId" Type="int" Nullable="false" />
+          <Property Name="ModelName" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rents">
+          <Key>
+            <PropertyRef Name="RentId" />
+          </Key>
+          <Property Name="RentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CarId" Type="int" Nullable="false" />
+          <Property Name="BeginDate" Type="date" Nullable="false" />
+          <Property Name="Length" Type="date" Nullable="false" />
+          <Property Name="DiscountValue" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Statuses">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transmissions">
+          <Key>
+            <PropertyRef Name="TransmissionId" />
+          </Key>
+          <Property Name="TransmissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransmissionName" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityId" Type="int" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nchar" MaxLength="16" Nullable="false" />
+          <Property Name="Phone" Type="nchar" MaxLength="14" Nullable="false" />
+          <Property Name="Email" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="Address" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="AvaiabilityId">
+          <End Role="Avaiabilities" Type="Self.Avaiabilities" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Avaiabilities">
+              <PropertyRef Name="AvaiabilityId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="AvaiabilityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarId">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="Rents" Type="Self.Rents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="CarId" />
+            </Principal>
+            <Dependent Role="Rents">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarsBodyId">
+          <End Role="Bodies" Type="Self.Bodies" Multiplicity="0..1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bodies">
+              <PropertyRef Name="BodyId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="BodyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarsBrandId">
+          <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brands">
+              <PropertyRef Name="BrandId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CityCountryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Cities">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CityId">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MileageCarId">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="MileageHistory" Type="Self.MileageHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="CarId" />
+            </Principal>
+            <Dependent Role="MileageHistory">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ModelId">
+          <End Role="Models" Type="Self.Models" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Models">
+              <PropertyRef Name="ModelId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ModelsBrandId">
+          <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
+          <End Role="Models" Type="Self.Models" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brands">
+              <PropertyRef Name="BrandId" />
+            </Principal>
+            <Dependent Role="Models">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StatusId">
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TransmissionId">
+          <End Role="Transmissions" Type="Self.Transmissions" Multiplicity="0..1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transmissions">
+              <PropertyRef Name="TransmissionId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="TransmissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserCountryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Rents" Type="Self.Rents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Rents">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="Avaiabilities" EntityType="Self.Avaiabilities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bodies" EntityType="Self.Bodies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MileageHistory" EntityType="Self.MileageHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Models" EntityType="Self.Models" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rents" EntityType="Self.Rents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transmissions" EntityType="Self.Transmissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="AvaiabilityId" Association="Self.AvaiabilityId">
+            <End Role="Avaiabilities" EntitySet="Avaiabilities" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="CarId" Association="Self.CarId">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="Rents" EntitySet="Rents" />
+          </AssociationSet>
+          <AssociationSet Name="CarsBodyId" Association="Self.CarsBodyId">
+            <End Role="Bodies" EntitySet="Bodies" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="CarsBrandId" Association="Self.CarsBrandId">
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="CityCountryId" Association="Self.CityCountryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Cities" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="CityId" Association="Self.CityId">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="MileageCarId" Association="Self.MileageCarId">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="MileageHistory" EntitySet="MileageHistory" />
+          </AssociationSet>
+          <AssociationSet Name="ModelId" Association="Self.ModelId">
+            <End Role="Models" EntitySet="Models" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="ModelsBrandId" Association="Self.ModelsBrandId">
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Models" EntitySet="Models" />
+          </AssociationSet>
+          <AssociationSet Name="StatusId" Association="Self.StatusId">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="TransmissionId" Association="Self.TransmissionId">
+            <End Role="Transmissions" EntitySet="Transmissions" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="UserCountryId" Association="Self.UserCountryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="UserId" Association="Self.UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rents" EntitySet="Rents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Avaiabilities">
+          <Key>
+            <PropertyRef Name="AvaiabilityId" />
+          </Key>
+          <Property Name="AvaiabilityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AvaiabilityName" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.AvaiabilityId" FromRole="Avaiabilities" ToRole="Cars" />
+        </EntityType>
+        <EntityType Name="Bodies">
+          <Key>
+            <PropertyRef Name="BodyId" />
+          </Key>
+          <Property Name="BodyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BodyName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.CarsBodyId" FromRole="Bodies" ToRole="Cars" />
+        </EntityType>
+        <EntityType Name="Brands">
+          <Key>
+            <PropertyRef Name="BrandId" />
+          </Key>
+          <Property Name="BrandId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.CarsBrandId" FromRole="Brands" ToRole="Cars" />
+          <NavigationProperty Name="Models" Relationship="Self.ModelsBrandId" FromRole="Brands" ToRole="Models" />
+        </EntityType>
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="CarId" />
+          </Key>
+          <Property Name="CarId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandId" Type="Int32" Nullable="false" />
+          <Property Name="ModelId" Type="Int32" Nullable="false" />
+          <Property Name="TransmissionId" Type="Int32" />
+          <Property Name="BodyId" Type="Int32" />
+          <Property Name="AvaiabilityId" Type="Int32" Nullable="false" />
+          <Property Name="Plate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="VIN" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Year4" Type="Int32" Nullable="false" />
+          <Property Name="PowerKM" Type="Int32" />
+          <NavigationProperty Name="Avaiabilities" Relationship="Self.AvaiabilityId" FromRole="Cars" ToRole="Avaiabilities" />
+          <NavigationProperty Name="Bodies" Relationship="Self.CarsBodyId" FromRole="Cars" ToRole="Bodies" />
+          <NavigationProperty Name="Brands" Relationship="Self.CarsBrandId" FromRole="Cars" ToRole="Brands" />
+          <NavigationProperty Name="Rents" Relationship="Self.CarId" FromRole="Cars" ToRole="Rents" />
+          <NavigationProperty Name="MileageHistory" Relationship="Self.MileageCarId" FromRole="Cars" ToRole="MileageHistory" />
+          <NavigationProperty Name="Models" Relationship="Self.ModelId" FromRole="Cars" ToRole="Models" />
+          <NavigationProperty Name="Transmissions" Relationship="Self.TransmissionId" FromRole="Cars" ToRole="Transmissions" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Countries" Relationship="Self.CityCountryId" FromRole="Cities" ToRole="Countries" />
+          <NavigationProperty Name="Users" Relationship="Self.CityId" FromRole="Cities" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cities" Relationship="Self.CityCountryId" FromRole="Countries" ToRole="Cities" />
+          <NavigationProperty Name="Users" Relationship="Self.UserCountryId" FromRole="Countries" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="MileageHistory">
+          <Key>
+            <PropertyRef Name="MileageId" />
+          </Key>
+          <Property Name="MileageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Mileage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.MileageCarId" FromRole="MileageHistory" ToRole="Cars" />
+        </EntityType>
+        <EntityType Name="Models">
+          <Key>
+            <PropertyRef Name="ModelId" />
+          </Key>
+          <Property Name="ModelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandId" Type="Int32" Nullable="false" />
+          <Property Name="ModelName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Brands" Relationship="Self.ModelsBrandId" FromRole="Models" ToRole="Brands" />
+          <NavigationProperty Name="Cars" Relationship="Self.ModelId" FromRole="Models" ToRole="Cars" />
+        </EntityType>
+        <EntityType Name="Rents">
+          <Key>
+            <PropertyRef Name="RentId" />
+          </Key>
+          <Property Name="RentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CarId" Type="Int32" Nullable="false" />
+          <Property Name="BeginDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Length" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DiscountValue" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.CarId" FromRole="Rents" ToRole="Cars" />
+          <NavigationProperty Name="Users" Relationship="Self.UserId" FromRole="Rents" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Statuses">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.StatusId" FromRole="Statuses" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Transmissions">
+          <Key>
+            <PropertyRef Name="TransmissionId" />
+          </Key>
+          <Property Name="TransmissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransmissionName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.TransmissionId" FromRole="Transmissions" ToRole="Cars" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityId" Type="Int32" Nullable="false" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="16" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="14" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cities" Relationship="Self.CityId" FromRole="Users" ToRole="Cities" />
+          <NavigationProperty Name="Countries" Relationship="Self.UserCountryId" FromRole="Users" ToRole="Countries" />
+          <NavigationProperty Name="Rents" Relationship="Self.UserId" FromRole="Users" ToRole="Rents" />
+          <NavigationProperty Name="Statuses" Relationship="Self.StatusId" FromRole="Users" ToRole="Statuses" />
+        </EntityType>
+        <Association Name="AvaiabilityId">
+          <End Role="Avaiabilities" Type="Self.Avaiabilities" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Avaiabilities">
+              <PropertyRef Name="AvaiabilityId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="AvaiabilityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarsBodyId">
+          <End Role="Bodies" Type="Self.Bodies" Multiplicity="0..1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bodies">
+              <PropertyRef Name="BodyId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="BodyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarsBrandId">
+          <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brands">
+              <PropertyRef Name="BrandId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ModelsBrandId">
+          <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
+          <End Role="Models" Type="Self.Models" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brands">
+              <PropertyRef Name="BrandId" />
+            </Principal>
+            <Dependent Role="Models">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CarId">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="Rents" Type="Self.Rents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="CarId" />
+            </Principal>
+            <Dependent Role="Rents">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MileageCarId">
+          <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+          <End Role="MileageHistory" Type="Self.MileageHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cars">
+              <PropertyRef Name="CarId" />
+            </Principal>
+            <Dependent Role="MileageHistory">
+              <PropertyRef Name="CarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ModelId">
+          <End Role="Models" Type="Self.Models" Multiplicity="1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Models">
+              <PropertyRef Name="ModelId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TransmissionId">
+          <End Role="Transmissions" Type="Self.Transmissions" Multiplicity="0..1" />
+          <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transmissions">
+              <PropertyRef Name="TransmissionId" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="TransmissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CityCountryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Cities">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CityId">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserCountryId">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Rents" Type="Self.Rents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Rents">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StatusId">
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Avaiabilities" EntityType="Self.Avaiabilities" />
+          <EntitySet Name="Bodies" EntityType="Self.Bodies" />
+          <EntitySet Name="Brands" EntityType="Self.Brands" />
+          <EntitySet Name="Cars" EntityType="Self.Cars" />
+          <EntitySet Name="Cities" EntityType="Self.Cities" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" />
+          <EntitySet Name="MileageHistory" EntityType="Self.MileageHistory" />
+          <EntitySet Name="Models" EntityType="Self.Models" />
+          <EntitySet Name="Rents" EntityType="Self.Rents" />
+          <EntitySet Name="Statuses" EntityType="Self.Statuses" />
+          <EntitySet Name="Transmissions" EntityType="Self.Transmissions" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="AvaiabilityId" Association="Self.AvaiabilityId">
+            <End Role="Avaiabilities" EntitySet="Avaiabilities" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="CarsBodyId" Association="Self.CarsBodyId">
+            <End Role="Bodies" EntitySet="Bodies" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="CarsBrandId" Association="Self.CarsBrandId">
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="ModelsBrandId" Association="Self.ModelsBrandId">
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Models" EntitySet="Models" />
+          </AssociationSet>
+          <AssociationSet Name="CarId" Association="Self.CarId">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="Rents" EntitySet="Rents" />
+          </AssociationSet>
+          <AssociationSet Name="MileageCarId" Association="Self.MileageCarId">
+            <End Role="Cars" EntitySet="Cars" />
+            <End Role="MileageHistory" EntitySet="MileageHistory" />
+          </AssociationSet>
+          <AssociationSet Name="ModelId" Association="Self.ModelId">
+            <End Role="Models" EntitySet="Models" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="TransmissionId" Association="Self.TransmissionId">
+            <End Role="Transmissions" EntitySet="Transmissions" />
+            <End Role="Cars" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="CityCountryId" Association="Self.CityCountryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Cities" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="CityId" Association="Self.CityId">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="UserCountryId" Association="Self.UserCountryId">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="UserId" Association="Self.UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rents" EntitySet="Rents" />
+          </AssociationSet>
+          <AssociationSet Name="StatusId" Association="Self.StatusId">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <EntitySetMapping Name="Avaiabilities">
+            <EntityTypeMapping TypeName="DatabaseModel.Avaiabilities">
+              <MappingFragment StoreEntitySet="Avaiabilities">
+                <ScalarProperty Name="AvaiabilityId" ColumnName="AvaiabilityId" />
+                <ScalarProperty Name="AvaiabilityName" ColumnName="AvaiabilityName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bodies">
+            <EntityTypeMapping TypeName="DatabaseModel.Bodies">
+              <MappingFragment StoreEntitySet="Bodies">
+                <ScalarProperty Name="BodyId" ColumnName="BodyId" />
+                <ScalarProperty Name="BodyName" ColumnName="BodyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="DatabaseModel.Brands">
+              <MappingFragment StoreEntitySet="Brands">
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cars">
+            <EntityTypeMapping TypeName="DatabaseModel.Cars">
+              <MappingFragment StoreEntitySet="Cars">
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="TransmissionId" ColumnName="TransmissionId" />
+                <ScalarProperty Name="BodyId" ColumnName="BodyId" />
+                <ScalarProperty Name="AvaiabilityId" ColumnName="AvaiabilityId" />
+                <ScalarProperty Name="Plate" ColumnName="Plate" />
+                <ScalarProperty Name="VIN" ColumnName="VIN" />
+                <ScalarProperty Name="Year4" ColumnName="Year4" />
+                <ScalarProperty Name="PowerKM" ColumnName="PowerKM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="DatabaseModel.Cities">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="DatabaseModel.Countries">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MileageHistory">
+            <EntityTypeMapping TypeName="DatabaseModel.MileageHistory">
+              <MappingFragment StoreEntitySet="MileageHistory">
+                <ScalarProperty Name="MileageId" ColumnName="MileageId" />
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Mileage" ColumnName="Mileage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Models">
+            <EntityTypeMapping TypeName="DatabaseModel.Models">
+              <MappingFragment StoreEntitySet="Models">
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rents">
+            <EntityTypeMapping TypeName="DatabaseModel.Rents">
+              <MappingFragment StoreEntitySet="Rents">
+                <ScalarProperty Name="RentId" ColumnName="RentId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CarId" ColumnName="CarId" />
+                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="DiscountValue" ColumnName="DiscountValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Statuses">
+            <EntityTypeMapping TypeName="DatabaseModel.Statuses">
+              <MappingFragment StoreEntitySet="Statuses">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transmissions">
+            <EntityTypeMapping TypeName="DatabaseModel.Transmissions">
+              <MappingFragment StoreEntitySet="Transmissions">
+                <ScalarProperty Name="TransmissionId" ColumnName="TransmissionId" />
+                <ScalarProperty Name="TransmissionName" ColumnName="TransmissionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DatabaseModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
