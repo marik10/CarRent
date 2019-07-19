@@ -49,7 +49,8 @@ namespace CarRent.View
                 language.Phone, language.Email
             };
             TypingByList(Options);
-            return MenuReaderCatcher(Options.Count());
+            var result = MenuReaderCatcher(Options.Count());
+            return result;
         }
 
         public void ShowException(Exception e)

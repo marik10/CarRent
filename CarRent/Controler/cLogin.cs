@@ -71,6 +71,7 @@ namespace CarRent.Controler
                             while (ld.Password is null ||
                             ld.Password.Equals("") ||
                             ld.Password.Equals(truePassword));
+
                             if (ld.Password is null ||
                             ld.Password.Equals(""))
                                 return;
@@ -89,7 +90,36 @@ namespace CarRent.Controler
         public void SignUp()
         {
             oUser s = vl.SignUp();
-            ml.SignUp(s);
+            if (s is null)
+                return;
+            else
+            {
+                ml.SignUp(s);
+
+                while (ml.ExistingEmail)
+                {
+                    s.Email = vl.AskForRepeat("email");
+                    if (s.Email is null || s.Email.Equals(""))
+                        return;
+                    ml.SignUp(s);
+                }
+
+                while (ml.ExistingLogin)
+                {
+                    s.UserName = vl.AskForRepeat("login");
+                    if (s.UserName is null || s.UserName.Equals(""))
+                        return;
+                    ml.SignUp(s);
+                }
+
+                while (ml.ExistingPhone)
+                {
+                    s.Phone = vl.AskForRepeat("phone");
+                    if (s.Phone is null || s.Phone.Equals(""))
+                        return;
+                    ml.SignUp(s);
+                }
+            }
         }
     }
 }

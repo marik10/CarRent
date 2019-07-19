@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CarRent.Model
 {
+    //OLD
     class AdminModel : UserModel
     {
         public void SetAvaiabilities(IEnumerable<Avaiabilities> av) { throw new NotImplementedException(); }

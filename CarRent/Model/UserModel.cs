@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CarRent.Model
 {
+    //OLD
     class UserModel : mLogin
     {
         public IEnumerable<Avaiabilities> GetAvaiabilities() { throw new NotImplementedException(); }
