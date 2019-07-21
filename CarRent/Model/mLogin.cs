@@ -8,7 +8,7 @@ namespace CarRent.Model
         private DatabaseEntities Context;
         public Exception LastException { get; private set; }
         public bool ExistingEmail { get; private set; }
-        public bool ExistingPhone{ get; private set; }
+        public bool ExistingPhone { get; private set; }
         public bool ExistingLogin { get; private set; }
 
         public mLogin()
@@ -28,8 +28,13 @@ namespace CarRent.Model
                 var query = from us in Context.Users
                             where us.Login == login
                             select us;
-                var result = query.FirstOrDefault().Password;
-                return result;
+                if (query.Any())
+                {
+                    var result = query.ToList()[0].Password;
+                    return result;
+                }
+                else
+                    return "";
             }
             catch (Exception e)
             {
@@ -50,22 +55,22 @@ namespace CarRent.Model
                     a => a.Email == user.Email ||
                     a.Phone == user.Phone ||
                     a.Login == user.UserName);
-                if (!(query is null))
+                if (query.Any())
                 {
                     var query2 = query.Where(a => a.Email == user.Email);
-                    if(!(query2 is null))
+                    if (query2.Any())
                     {
                         ExistingEmail = true;
                     }
 
                     var query3 = query.Where(a => a.Phone == user.Phone);
-                    if (!(query3 is null))
+                    if (query3.Any())
                     {
                         ExistingPhone = true;
                     }
 
                     var query4 = query.Where(a => a.Login == user.UserName);
-                    if (!(query4 is null))
+                    if (query4.Any())
                     {
                         ExistingLogin = true;
                     }

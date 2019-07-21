@@ -14,7 +14,7 @@ namespace CarRent
     {
         static void Main(string[] args)
         {
-            (new Controler.cLogin()).Begin();
+            (new cLogin()).Begin();
             /*
             var context = new DatabaseEntities();
             Countries c = new Countries() { CountryName = "Poland" };

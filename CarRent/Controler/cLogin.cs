@@ -1,6 +1,7 @@
 ﻿using CarRent.Model;
 using CarRent.View;
 using System;
+using System.Text.RegularExpressions;
 
 namespace CarRent.Controler
 {
@@ -60,7 +61,8 @@ namespace CarRent.Controler
                         if (ld.Password.Equals(truePassword))
                         {
                             //Nadać parametry użytkownika
-                            throw new NotImplementedException();
+                            throw new NotImplementedException(
+                                "Everything is good, but the app is in alpha and the functionality is in development");
                         }
                         else
                         {
@@ -68,9 +70,9 @@ namespace CarRent.Controler
                             {
                                 ld.Password = vl.AskForRepeat("password");
                             }
-                            while (ld.Password is null ||
+                            while (!(ld.Password is null ||
                             ld.Password.Equals("") ||
-                            ld.Password.Equals(truePassword));
+                            ld.Password.Equals(truePassword)));
 
                             if (ld.Password is null ||
                             ld.Password.Equals(""))
@@ -78,7 +80,8 @@ namespace CarRent.Controler
                             else
                             {
                                 //Nadać parametry użytkownika
-                                throw new NotImplementedException();
+                                throw new NotImplementedException(
+                                    "Everything is good, but the app is in alpha and the functionality is in development");
                             }
 
                         }
@@ -94,31 +97,93 @@ namespace CarRent.Controler
                 return;
             else
             {
+                VerifyTypeData(s);
+
+                if (s is null)
+                    return;
+                else
+                    VerifyCorrectData(s);
+            }
+        }
+
+        private string Field(string data, string name, int minimallength, Func<string, bool> pattern)
+        {
+            while (data.Length < minimallength || !pattern(data))
+            {
+                data = vl.AskForRepeat(name, minimallength);
+                if (data is null || data.Equals(""))
+                    return "";
+            }
+            return data;
+        }
+
+        private bool VerifyTypeData(oUser s)
+        {
+            bool returnTrue(string a) => true;
+            bool cityName(string c) => Regex.IsMatch(c, @"^\d{2}-\d{3} ");
+            bool email(string c) => c.Contains("@");
+
+            s.Address = Field(s.Address, "incorrectaddress", 3, returnTrue);
+            if (s.Address.Equals(""))
+                return false;
+
+            s.CityName = Field(s.CityName, "incorrectcityname", 8, cityName);
+            if (s.CityName.Equals(""))
+                return false;
+
+            s.CountryName = Field(s.CountryName, "incorrectcountryname", 2, returnTrue);
+            if (s.CountryName.Equals(""))
+                return false;
+
+            s.Email = Field(s.Email, "incorrectemail", 3, email);
+            if (s.Email.Equals(""))
+                return false;
+
+            s.Name = Field(s.Name, "incorrectname", 2, returnTrue);
+            if (s.Name.Equals(""))
+                return false;
+
+            s.Password = Field(s.Password, "incorrectpassword", 6, returnTrue);
+            if (s.Password.Equals(""))
+                return false;
+
+            s.Phone = Field(s.Phone, "incorrectphone", 7, returnTrue);
+            if (s.Phone.Equals(""))
+                return false;
+
+            s.UserName = Field(s.UserName, "incorrectusername", 4, returnTrue);
+            if (s.UserName.Equals(""))
+                return false;
+
+            return true;
+        }
+
+        private void VerifyCorrectData(oUser s)
+        {
+            ml.SignUp(s);
+
+            while (ml.ExistingEmail)
+            {
+                s.Email = vl.AskForRepeat("email");
+                if (s.Email is null || s.Email.Equals(""))
+                    return;
                 ml.SignUp(s);
+            }
 
-                while (ml.ExistingEmail)
-                {
-                    s.Email = vl.AskForRepeat("email");
-                    if (s.Email is null || s.Email.Equals(""))
-                        return;
-                    ml.SignUp(s);
-                }
+            while (ml.ExistingLogin)
+            {
+                s.UserName = vl.AskForRepeat("login");
+                if (s.UserName is null || s.UserName.Equals(""))
+                    return;
+                ml.SignUp(s);
+            }
 
-                while (ml.ExistingLogin)
-                {
-                    s.UserName = vl.AskForRepeat("login");
-                    if (s.UserName is null || s.UserName.Equals(""))
-                        return;
-                    ml.SignUp(s);
-                }
-
-                while (ml.ExistingPhone)
-                {
-                    s.Phone = vl.AskForRepeat("phone");
-                    if (s.Phone is null || s.Phone.Equals(""))
-                        return;
-                    ml.SignUp(s);
-                }
+            while (ml.ExistingPhone)
+            {
+                s.Phone = vl.AskForRepeat("phone");
+                if (s.Phone is null || s.Phone.Equals(""))
+                    return;
+                ml.SignUp(s);
             }
         }
     }
