@@ -1,6 +1,6 @@
 ﻿namespace CarRent.Model
 {
-    class oLogin
+    class oLoginData
     {
         public string Login;
         public string Password;

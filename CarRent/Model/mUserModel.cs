@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CarRent.Model
 {
     //OLD
-    class UserModel : mLogin
+    class mUserModel : mLogin
     {
         public IEnumerable<Avaiabilities> GetAvaiabilities() { throw new NotImplementedException(); }
         public IEnumerable<Bodies> GetBodies() { throw new NotImplementedException(); }

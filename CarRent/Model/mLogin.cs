@@ -5,7 +5,7 @@ namespace CarRent.Model
 {
     class mLogin
     {
-        private DatabaseEntities Context;
+        private readonly DatabaseEntities Context;
         public Exception LastException { get; private set; }
         public bool ExistingEmail { get; private set; }
         public bool ExistingPhone { get; private set; }
@@ -43,7 +43,7 @@ namespace CarRent.Model
             }
         }
 
-        public void SignUp(oUser user)
+        public void SignUp(oUser oUser)
         {
             LastException = null;
             ExistingEmail = false;
@@ -52,24 +52,24 @@ namespace CarRent.Model
             try
             {
                 var query = Context.Users.Where(
-                    a => a.Email == user.Email ||
-                    a.Phone == user.Phone ||
-                    a.Login == user.UserName);
+                    a => a.Email == oUser.Email ||
+                    a.Phone == oUser.Phone ||
+                    a.Login == oUser.UserName);
                 if (query.Any())
                 {
-                    var query2 = query.Where(a => a.Email == user.Email);
+                    var query2 = query.Where(a => a.Email == oUser.Email);
                     if (query2.Any())
                     {
                         ExistingEmail = true;
                     }
 
-                    var query3 = query.Where(a => a.Phone == user.Phone);
+                    var query3 = query.Where(a => a.Phone == oUser.Phone);
                     if (query3.Any())
                     {
                         ExistingPhone = true;
                     }
 
-                    var query4 = query.Where(a => a.Login == user.UserName);
+                    var query4 = query.Where(a => a.Login == oUser.UserName);
                     if (query4.Any())
                     {
                         ExistingLogin = true;
@@ -77,28 +77,28 @@ namespace CarRent.Model
                     return;
                 }
 
-                var countryId = getCountryId(user.CountryName);
+                var countryId = getCountryId(oUser.CountryName);
                 if (countryId == -1)
                     return;
 
-                var cityId = getCityId(user.CityName, countryId);
+                var cityId = getCityId(oUser.CityName, countryId);
                 if (cityId == -1)
                     return;
 
-                Users u = new Users()
+                Users user = new Users()
                 {
-                    Login = user.UserName,
-                    Password = user.Password,
-                    Address = user.Address,
-                    Name = user.Name,
-                    Phone = user.Phone,
-                    Email = user.Email,
+                    Login = oUser.UserName,
+                    Password = oUser.Password,
+                    Address = oUser.Address,
+                    Name = oUser.Name,
+                    Phone = oUser.Phone,
+                    Email = oUser.Email,
                     StatusId = 2,
                     CountryId = countryId,
                     CityId = cityId
                 };
 
-                Context.Users.Add(u);
+                Context.Users.Add(user);
                 Context.SaveChanges();
             }
             catch (Exception e)

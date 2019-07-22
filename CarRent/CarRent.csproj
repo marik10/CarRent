@@ -70,7 +70,7 @@
     <Compile Include="Controler\cLogin.cs" />
     <Compile Include="Language\ILanguage.cs" />
     <Compile Include="Language\PL.cs" />
-    <Compile Include="Model\AdminModel.cs" />
+    <Compile Include="Model\mAdminModel.cs" />
     <Compile Include="Model\Avaiabilities.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -122,7 +122,7 @@
     <Compile Include="Model\Transmissions.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\UserModel.cs" />
+    <Compile Include="Model\mUserModel.cs" />
     <Compile Include="Model\Users.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

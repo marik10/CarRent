@@ -9,35 +9,43 @@ namespace CarRent.View
 {
     class vLogin
     {
-        private ILanguage language;
+        private readonly ILanguage Language;
 
         public vLogin()
         {
-            language = new PL();
+            Language = new PL();
         }
 
+        /// <summary>
+        /// Prepare first menu.
+        /// </summary>
+        /// <returns>Selected option.</returns>
         public int Begin()
         {
             Console.Clear();
             string[] Options = new string[]
             {
-                language.SignIn,
-                language.SignUp,
-                language.Exit
+                Language.SignIn,
+                Language.SignUp,
+                Language.Exit
             };
             SelectingByList(Options);
             var result = Selector(Options.Count());
             return result;
         }
 
-        public oLogin SignIn()
+        /// <summary>
+        /// Shows sign in.
+        /// </summary>
+        /// <returns>Login Data object.</returns>
+        public oLoginData SignIn()
         {
             Console.Clear();
-            oLogin ld = new oLogin();
+            oLoginData ld = new oLoginData();
             TypingByList(new string[]
             {
-                language.UserName,
-                language.Password
+                Language.UserName,
+                Language.Password
             });
             Console.SetCursorPosition(42, 0);
             ld.Login = TextCatcher(true);
@@ -48,42 +56,56 @@ namespace CarRent.View
             return ld;
         }
 
+        /// <summary>
+        /// Shows sign up.
+        /// </summary>
+        /// <returns>Object user with data or null if interrupted.</returns>
         public oUser SignUp()
         {
             Console.Clear();
-            string[] Options = new string[]
+            string[] options = new string[]
             {
-                language.UserName,
-                language.Password,
-                language.CityName,
-                language.CountryName,
-                language.Address,
-                language.Name,
-                language.Phone,
-                language.Email
+                Language.UserName,
+                Language.Password,
+                Language.CityName,
+                Language.CountryName,
+                Language.Address,
+                Language.Name,
+                Language.Phone,
+                Language.Email
             };
-            TypingByList(Options);
-            var result = MenuReaderCatcher(Options.Count());
+            TypingByList(options);
+            var result = MenuReaderCatcher(options.Count());
             Console.Write("\n");
             return result;
         }
 
+        /// <summary>
+        /// Shows any exception and wait 8 sec.
+        /// </summary>
+        /// <param name="e">An exception to show.</param>
         public void ShowException(Exception e)
         {
             Console.WriteLine("\n" + e + "\n");
             Thread.Sleep(8000);
         }
 
+        /// <summary>
+        /// Shows login error text and wait 5 sec.
+        /// </summary>
         public void ShowLoginError()
         {
-            Console.WriteLine("\n" + language.WrongLogin + "\n");
+            Console.WriteLine("\n" + Language.WrongLogin + "\n");
             Thread.Sleep(5000);
         }
 
         /// <summary>
         /// Ask the user for new data. 
         /// </summary>
-        /// <param name="errorName">"password" for secret password, "email", "phone" or "login" for visible data.</param>
+        /// <param name="errorName">"password" for secret password, "email", "phone" or "login" for visible data, 
+        /// "incorrectaddress", "incorrectcityname", "incorrectcountryname" "incorrectemail", "incorrectname", 
+        /// "incorrectpassword", "incorrectphone", "incorrectusername" for wrong pattern words.</param>
+        /// <param name="length">Minimal length of correct data.</param>
         /// <returns>input by user or empty string.</returns>
         public string AskForRepeat(string errorName, int length = 0)
         {
@@ -91,46 +113,52 @@ namespace CarRent.View
             switch (errorName)
             {
                 case "password":
-                    result = AskForField(language.WrongPassword, false);
+                    result = AskForField(Language.WrongPassword, false);
                     return result;
                 case "email":
-                    result = AskForField(language.ExistingEmail, true);
+                    result = AskForField(Language.ExistingEmail, true);
                     return result;
                 case "phone":
-                    result = AskForField(language.ExistingPhone, true);
+                    result = AskForField(Language.ExistingPhone, true);
                     return result;
                 case "login":
-                    result = AskForField(language.ExistingLogin, true);
+                    result = AskForField(Language.ExistingLogin, true);
                     return result;
                 case "incorrectaddress":
-                    result = AskForField(language.IncorrectAddress(length), true);
+                    result = AskForField(Language.IncorrectAddress(length), true);
                     return result;
                 case "incorrectcityname":
-                    result = AskForField(language.IncorrectCityName(length, "XX-XXX CityName"), true);
+                    result = AskForField(Language.IncorrectCityName(length, "XX-XXX CityName"), true);
                     return result;
                 case "incorrectcountryname":
-                    result = AskForField(language.IncorrectCountryName(length), true);
+                    result = AskForField(Language.IncorrectCountryName(length), true);
                     return result;
                 case "incorrectemail":
-                    result = AskForField(language.IncorrectEmail(length, "@"), true);
+                    result = AskForField(Language.IncorrectEmail(length, "@"), true);
                     return result;
                 case "incorrectname":
-                    result = AskForField(language.IncorrectName(length), true);
+                    result = AskForField(Language.IncorrectName(length), true);
                     return result;
                 case "incorrectpassword":
-                    result = AskForField(language.IncorrectPassword(length), true);
+                    result = AskForField(Language.IncorrectPassword(length), true);
                     return result;
                 case "incorrectphone":
-                    result = AskForField(language.IncorrectPhone(length), true);
+                    result = AskForField(Language.IncorrectPhone(length), true);
                     return result;
                 case "incorrectusername":
-                    result = AskForField(language.IncorrectUserName(length), true);
+                    result = AskForField(Language.IncorrectUserName(length), true);
                     return result;
                 default:
                     throw new FormatException("The parameter is incorrect!");
             }
         }
 
+        /// <summary>
+        /// Ask again for repeat a single variable.
+        /// </summary>
+        /// <param name="errorName">Name of error exist.</param>
+        /// <param name="isVisible">true for visible input, false for stars input.</param>
+        /// <returns>input data or empty string if interrupted.</returns>
         private string AskForField(string errorName, bool isVisible)
         {
             Console.WriteLine("\n" + errorName + "\n");
@@ -138,20 +166,31 @@ namespace CarRent.View
             return result;
         }
 
-        private oUser MenuReaderCatcher(int Options)
+        /// <summary>
+        /// Reads user data.
+        /// </summary>
+        /// <param name="OptionsCount">Count (lines) to insert.</param>
+        /// <returns>oUser object with data or null if interrupted.</returns>
+        private oUser MenuReaderCatcher(int optionsCount)
         {
-            string[] result = new string[Options];
-            for (int i = 0; i < Options; i++)
+            string[] tableOfResult = new string[optionsCount];
+            for (int i = 0; i < optionsCount; i++)
             {
                 Console.SetCursorPosition(42, i);
                 string text = TextCatcher(true);
                 if (text.Equals(""))
                     return (null);
-                result[i] = text;
+                tableOfResult[i] = text;
             }
-            return TabStringToUser(result);
+            var result = TabStringToUser(tableOfResult);
+            return result;
         }
 
+        /// <summary>
+        /// Convert string table to user (verify the order).
+        /// </summary>
+        /// <param name="data">Table of input data.</param>
+        /// <returns>oUser object with data.</returns>
         private oUser TabStringToUser(string[] data)
         {
             oUser result = new oUser()
@@ -168,6 +207,11 @@ namespace CarRent.View
             return result;
         }
 
+        /// <summary>
+        /// Catching the input text.
+        /// </summary>
+        /// <param name="isVisible">True show signs, false show stars.</param>
+        /// <returns>Input line or empty string (if interrupted).</returns>
         private string TextCatcher(bool isVisible)
         {
             string text = "";
@@ -183,7 +227,7 @@ namespace CarRent.View
                     case ConsoleKey.Backspace:
                         if (text.Length > 0)
                         {
-                            RemoveLastKey();
+                            Backspace();
                             text = text.Substring(0, text.Length - 1);
                         }
                         break;
@@ -202,33 +246,49 @@ namespace CarRent.View
             }
         }
 
-        private void RemoveLastKey()
+        /// <summary>
+        /// Removes last character, backspace functionality.
+        /// </summary>
+        private void Backspace()
         {
             Console.CursorLeft -= 1;
             Console.Write(" ");
             Console.CursorLeft -= 1;
         }
 
-        private void SelectingByList(string[] Options)
-        {
-            foreach (string Option in Options)
-            {
-                Console.WriteLine("   {0}", Option);
-            }
-        }
-
-        private void TypingByList(string[] Options)
+        /// <summary>
+        /// Draws list of options with typing as input method.
+        /// </summary>
+        /// <param name="optionsCount">All options to write.</param>
+        private void TypingByList(string[] optionsCount)
         {
 
-            foreach (string Option in Options)
+            foreach (string Option in optionsCount)
             {
                 Console.WriteLine("{0,-40} : ", Option);
             }
         }
 
-        private int Selector(int OptionsCount)
+        /// <summary>
+        /// Draws list of options with selecting option as star.
+        /// </summary>
+        /// <param name="optionsCount">All options to write.</param>
+        private void SelectingByList(string[] optionsCount)
         {
-            OptionsCount--;
+            foreach (string Option in optionsCount)
+            {
+                Console.WriteLine("   {0}", Option);
+            }
+        }
+
+        /// <summary>
+        /// Selecting one of with up and down arrow.
+        /// </summary>
+        /// <param name="optionsCount">Count (lines) to select width.</param>
+        /// <returns>Selected number, from 0 to OptionsCount-1.</returns>
+        private int Selector(int optionsCount)
+        {
+            optionsCount--;
             int current = 0;
             MoveSelection(current, current);
             while (true)
@@ -239,20 +299,26 @@ namespace CarRent.View
                     case ConsoleKey.Enter:
                         return current;
                     case ConsoleKey.Escape:
-                        return OptionsCount;
+                        return optionsCount;
                     case ConsoleKey.UpArrow:
                         current = SelectAbove(current);
                         break;
                     case ConsoleKey.DownArrow:
-                        current = SelectBelow(current, OptionsCount);
+                        current = SelectBelow(current, optionsCount);
                         break;
                 }
             }
         }
 
-        private int SelectBelow(int current, int OptionsCount)
+        /// <summary>
+        /// Chosing the option below.
+        /// </summary>
+        /// <param name="current">Current selected row.</param>
+        /// <param name="optionsCount">Number of options.</param>
+        /// <returns>Row below or current (if on the end).</returns>
+        private int SelectBelow(int current, int optionsCount)
         {
-            if (current < OptionsCount)
+            if (current < optionsCount)
             {
                 MoveSelection(current, current + 1);
                 current++;
@@ -260,6 +326,11 @@ namespace CarRent.View
             return current;
         }
 
+        /// <summary>
+        /// Chosing the option above.
+        /// </summary>
+        /// <param name="current">Current selected row.</param>
+        /// <returns>Row above or current (if on the end).</returns>
         private int SelectAbove(int current)
         {
             if (current > 0)
@@ -270,6 +341,11 @@ namespace CarRent.View
             return current;
         }
 
+        /// <summary>
+        /// Moving selected row with star.
+        /// </summary>
+        /// <param name="oldPosition">Old position of star (clear).</param>
+        /// <param name="newPosition">New position of star.</param>
         private void MoveSelection(int oldPosition, int newPosition)
         {
             Console.SetCursorPosition(1, oldPosition);
